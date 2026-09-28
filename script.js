@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Custom Image Configuration URLs (Paste direct URLs here or in CSS variables)
     const USER_CONFIG = {
         // Leave string empty "" to keep initial fallback monogram avatar
-        profileImageUrl: "", 
+        profileImageUrl: "https://wallpapers.com/images/featured/one-piece-desktop-idg4aqn5l0lh40dk.jpg", 
         // Example: "https://images.unsplash.com/photo-1518770660439-4636190af475"
         heroBgUrl: "" 
     };

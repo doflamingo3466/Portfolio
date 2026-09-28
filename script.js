@@ -1,10 +1,63 @@
 /**
- * Personal Portfolio Website with Admin Dashboard
+ * Personal Portfolio Website with Admin Dashboard & Project Showcase
  * Author: Muhammad Abid Subhani
- * Architecture: Native Vanilla JavaScript (ES6+) with LocalStorage Data Operations
  */
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Custom Image Configuration URLs (Paste direct URLs here or in CSS variables)
+    const USER_CONFIG = {
+        // Leave string empty "" to keep initial fallback monogram avatar
+        profileImageUrl: "", 
+        // Example: "https://images.unsplash.com/photo-1518770660439-4636190af475"
+        heroBgUrl: "" 
+    };
+
+    // Project Details Data Source
+    const projectsData = [
+        {
+            id: 1,
+            num: "PROJECT 01",
+            title: "LAN Chat Application",
+            summary: "A high-performance socket-based local network communication platform designed for instant dynamic text sharing across desktop and mobile devices without requiring internet connection.",
+            techStack: ["Flutter", "Dart", "Sockets", "XAMPP", "PHP"],
+            features: [
+                "Real-time IP discovery across local subnet client sockets.",
+                "Cross-platform support across Android and Windows operating systems.",
+                "Secure peer-to-peer payload transfers with low latency.",
+                "Database logging on XAMPP server for historical chat retrieval."
+            ],
+            architecture: "Client-Server socket architecture utilizing asynchronous Dart stream listeners bound to active TCP/UDP ports."
+        },
+        {
+            id: 2,
+            num: "PROJECT 02",
+            title: "Trading Journal Dashboard",
+            summary: "An analytical client-side web application crafted to log, compute, and visualize financial trading positions, calculating win-rates, risk-to-reward ratios, and performance metrics.",
+            techStack: ["HTML5", "CSS3", "JavaScript (ES6)", "JSON", "Chart.js"],
+            features: [
+                "Interactive Chart.js visualizations tracking daily PnL and trade execution distribution.",
+                "Dynamic position calculation (Win/Loss metrics, Expectancy, and Average Drawdown).",
+                "JSON export and import features for easy data backing.",
+                "LocalStorage dynamic state persistence ensuring zero server storage needed."
+            ],
+            architecture: "Modular Vanilla JavaScript architecture utilizing array aggregation methods and dynamic Canvas API updates."
+        },
+        {
+            id: 3,
+            num: "PROJECT 03",
+            title: "Student Management System",
+            summary: "A comprehensive administrative frontend platform allowing educational institutions to manage student records, course enrollments, grade points, and academic status reports.",
+            techStack: ["HTML5", "CSS3", "JavaScript", "LocalStorage API"],
+            features: [
+                "Complete CRUD operations (Create, Read, Update, Delete) for student records.",
+                "Real-time search filtering by Student ID, Name, or Semester.",
+                "Automatic CGPA calculations and academic status badge generation.",
+                "Client-side LocalStorage schema persistence."
+            ],
+            architecture: "Event-driven DOM manipulation pipeline enforcing single-responsibility functions and strict data validation."
+        }
+    ];
+
     // Application Context & State
     const STORAGE_KEY = "portfolioMessages";
     let messages = [];
@@ -13,6 +66,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // DOM Elements Reference Object
     const elements = {
+        // Profile Image Elements
+        profileImage: document.getElementById("profileImage"),
+        avatarFallback: document.getElementById("avatarFallback"),
+
         // Public Navigation & Layout
         menuToggle: document.getElementById("menuToggle"),
         navLinks: document.getElementById("navLinks"),
@@ -30,6 +87,14 @@ document.addEventListener("DOMContentLoaded", function () {
         subjectError: document.getElementById("subjectError"),
         messageError: document.getElementById("messageError"),
         formSuccess: document.getElementById("formSuccess"),
+
+        // Project Modal Elements
+        projectModal: document.getElementById("projectModal"),
+        closeProjectModal: document.getElementById("closeProjectModal"),
+        closeProjectModalBtn: document.getElementById("closeProjectModalBtn"),
+        modalProjectNum: document.getElementById("modalProjectNum"),
+        modalProjectTitle: document.getElementById("modalProjectTitle"),
+        projectModalBody: document.getElementById("projectModalBody"),
 
         // Admin Access Modals
         openAdminBtn: document.getElementById("openAdminBtn"),
@@ -61,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
         messagesListWrapper: document.getElementById("messagesListWrapper"),
         recentMessagesContainer: document.getElementById("recentMessagesContainer"),
 
-        // Detail View Modal
+        // Message Detail View Modal
         viewMessageModal: document.getElementById("viewMessageModal"),
         closeViewModal: document.getElementById("closeViewModal"),
         closeViewModalBtn: document.getElementById("closeViewModalBtn"),
@@ -72,75 +137,84 @@ document.addEventListener("DOMContentLoaded", function () {
        Initialization
        ========================================================================== */
     function initApp() {
+        setupImages();
         loadMessagesFromStorage();
         attachEventListeners();
         renderDashboard();
     }
 
+    /* Configure Profile & Background Images */
+    function setupImages() {
+        if (USER_CONFIG.profileImageUrl && USER_CONFIG.profileImageUrl.trim() !== "") {
+            elements.profileImage.src = USER_CONFIG.profileImageUrl;
+            elements.profileImage.classList.remove("hidden");
+            elements.avatarFallback.classList.add("hidden");
+        }
+
+        if (USER_CONFIG.heroBgUrl && USER_CONFIG.heroBgUrl.trim() !== "") {
+            document.documentElement.style.setProperty('--hero-bg-url', `url("${USER_CONFIG.heroBgUrl}")`);
+        }
+    }
+
     /* ==========================================================================
-       LocalStorage Operations (CRUD Core Engine)
+       LocalStorage CRUD Logic
        ========================================================================== */
-    // Helper function to safely parse LocalStorage data with error handling
     function loadMessagesFromStorage() {
         try {
             const storedData = localStorage.getItem(STORAGE_KEY);
             messages = storedData ? JSON.parse(storedData) : [];
-            // Ensure array type safety
-            if (!Array.isArray(messages)) {
-                messages = [];
-            }
+            if (!Array.isArray(messages)) messages = [];
         } catch (error) {
-            console.error("Error reading messages from LocalStorage:", error);
+            console.error("Error reading from LocalStorage:", error);
             messages = [];
         }
     }
 
-    // Helper function to write messages to LocalStorage
     function saveMessagesToStorage() {
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-            renderDashboard(); // Re-render state everywhere upon alteration
+            renderDashboard();
         } catch (error) {
-            console.error("Failed to write to LocalStorage:", error);
-            alert("Storage operation failed. Your browser storage might be full or blocked.");
+            console.error("Failed writing to LocalStorage:", error);
+            alert("Storage limit reached or action prohibited by browser settings.");
         }
     }
 
     /* ==========================================================================
-       Event Registering Engine
+       Event Listeners
        ========================================================================== */
     function attachEventListeners() {
-        // Navigation Mobile Menu Toggle
         elements.menuToggle.addEventListener("click", toggleMobileMenu);
 
-        // Close mobile nav when link clicked
         document.querySelectorAll(".nav-item").forEach(link => {
             link.addEventListener("click", () => {
                 elements.navLinks.classList.remove("active");
             });
         });
 
-        // Contact Form Processing
         elements.contactForm.addEventListener("submit", handleContactSubmit);
 
-        // Admin Modal Controls
+        // Project Modal Listeners
+        elements.closeProjectModal.addEventListener("click", closeProjectModal);
+        elements.closeProjectModalBtn.addEventListener("click", closeProjectModal);
+
+        // Admin Login Listeners
         elements.openAdminBtn.addEventListener("click", showLoginModal);
         elements.footerAdminBtn.addEventListener("click", showLoginModal);
         elements.closeLoginModal.addEventListener("click", hideLoginModal);
         elements.loginForm.addEventListener("submit", handleAdminLogin);
 
-        // Admin Session & Tab Navigation
+        // Admin Navigation
         elements.exitAdminBtn.addEventListener("click", exitAdminView);
         elements.logoutBtn.addEventListener("click", logoutAdmin);
 
         elements.sidebarLinks.forEach(button => {
             button.addEventListener("click", function () {
-                const targetTab = this.getAttribute("data-tab");
-                switchAdminTab(targetTab);
+                switchAdminTab(this.getAttribute("data-tab"));
             });
         });
 
-        // Search & Filter Listeners
+        // Search and Filter Listeners
         elements.searchInput.addEventListener("input", function (e) {
             activeSearchQuery = e.target.value.toLowerCase().trim();
             renderMessagesList();
@@ -153,26 +227,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
         elements.clearAllBtn.addEventListener("click", clearAllMessages);
 
-        // Detail Modal Closing Operations
+        // View Message Modal Listeners
         elements.closeViewModal.addEventListener("click", closeViewModal);
         elements.closeViewModalBtn.addEventListener("click", closeViewModal);
     }
 
     /* ==========================================================================
-       Public View Functions
+       Project Details Modal Feature
+       ========================================================================== */
+    window.openProjectDetails = function (projectId) {
+        const project = projectsData.find(p => p.id === projectId);
+        if (!project) return;
+
+        elements.modalProjectNum.textContent = project.num;
+        elements.modalProjectTitle.textContent = project.title;
+
+        let techBadges = project.techStack.map(t => `<span class="skill-tag">${escapeHTML(t)}</span>`).join(" ");
+        let featuresList = project.features.map(f => `<li>${escapeHTML(f)}</li>`).join("");
+
+        elements.projectModalBody.innerHTML = `
+            <div class="project-detail-section">
+                <h4>Overview</h4>
+                <p>${escapeHTML(project.summary)}</p>
+            </div>
+
+            <div class="project-detail-section">
+                <h4>Technologies Employed</h4>
+                <div class="tags-list" style="margin-top:0.4rem;">${techBadges}</div>
+            </div>
+
+            <div class="project-detail-section">
+                <h4>Key Operational Features</h4>
+                <ul class="project-features-list" style="margin-top:0.4rem;">${featuresList}</ul>
+            </div>
+
+            <div class="project-detail-section">
+                <h4>System Architecture</h4>
+                <p>${escapeHTML(project.architecture)}</p>
+            </div>
+        `;
+
+        elements.projectModal.classList.add("active");
+    };
+
+    function closeProjectModal() {
+        elements.projectModal.classList.remove("active");
+    }
+
+    /* ==========================================================================
+       Public View & Contact Form
        ========================================================================== */
     function toggleMobileMenu() {
         elements.navLinks.classList.toggle("active");
     }
 
-    /* Contact Form Validation and Message Dispatch */
     function handleContactSubmit(e) {
         e.preventDefault();
-        
-        // Reset Error Feedback Messages
         clearFormErrors();
 
-        // Capture Inputs
         const name = elements.nameInput.value.trim();
         const email = elements.emailInput.value.trim();
         const subject = elements.subjectInput.value.trim();
@@ -180,7 +292,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let isValid = true;
 
-        // Validation Checks
         if (name === "") {
             elements.nameError.textContent = "Please enter your full name.";
             isValid = false;
@@ -190,23 +301,22 @@ document.addEventListener("DOMContentLoaded", function () {
             elements.emailError.textContent = "Please enter your email address.";
             isValid = false;
         } else if (!validateEmailPattern(email)) {
-            elements.emailError.textContent = "Please provide a valid email format.";
+            elements.emailError.textContent = "Please enter a valid email format.";
             isValid = false;
         }
 
         if (subject === "") {
-            elements.subjectError.textContent = "Please state a subject message line.";
+            elements.subjectError.textContent = "Please state a subject line.";
             isValid = false;
         }
 
         if (message === "") {
-            elements.messageError.textContent = "Please fill out your message body.";
+            elements.messageError.textContent = "Please write your message.";
             isValid = false;
         }
 
         if (!isValid) return;
 
-        // Construct Data Object (Create Operation)
         const newMessage = {
             id: Date.now(),
             name: name,
@@ -224,14 +334,12 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         };
 
-        // Append to Array and Persist
         messages.push(newMessage);
         saveMessagesToStorage();
 
-        // Feedback & Form Reset
         elements.contactForm.reset();
         elements.formSuccess.style.display = "block";
-        elements.formSuccess.textContent = "Thank you! Your message has been sent successfully.";
+        elements.formSuccess.textContent = "Thank you! Your message has been recorded.";
 
         setTimeout(() => {
             elements.formSuccess.style.display = "none";
@@ -246,12 +354,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function validateEmailPattern(email) {
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return pattern.test(email);
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
     /* ==========================================================================
-       Admin Access & Navigation Logic
+       Admin Access & Navigation
        ========================================================================== */
     function showLoginModal() {
         elements.loginModal.classList.add("active");
@@ -265,12 +372,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function handleAdminLogin(e) {
         e.preventDefault();
-        
-        /**
-         * FRONTEND DEMONSTRATION NOTICE:
-         * Standard static username/password checking logic. 
-         * Real security requires a backend server with cryptographic password hashing and HTTP cookies/tokens.
-         */
         const username = elements.adminUsername.value.trim();
         const password = elements.adminPassword.value.trim();
 
@@ -301,24 +402,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function switchAdminTab(targetTab) {
         elements.sidebarLinks.forEach(link => {
-            if (link.getAttribute("data-tab") === targetTab) {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
+            link.classList.toggle("active", link.getAttribute("data-tab") === targetTab);
         });
 
         elements.tabContents.forEach(content => {
-            if (content.id === targetTab + "Tab") {
-                content.classList.add("active");
-            } else {
-                content.classList.remove("active");
-            }
+            content.classList.toggle("active", content.id === targetTab + "Tab");
         });
     }
 
     /* ==========================================================================
-       Dashboard & Data Rendering
+       Dashboard Rendering
        ========================================================================== */
     function renderDashboard() {
         calculateStatistics();
@@ -326,22 +419,14 @@ document.addEventListener("DOMContentLoaded", function () {
         renderRecentMessages();
     }
 
-    /* Dynamic Statistics Engine */
     function calculateStatistics() {
-        const total = messages.length;
-        const unread = messages.filter(m => m.status === "Unread").length;
-        const read = messages.filter(m => m.status === "Read").length;
-        const replied = messages.filter(m => m.status === "Replied").length;
-
-        elements.statTotal.textContent = total;
-        elements.statUnread.textContent = unread;
-        elements.statRead.textContent = read;
-        elements.statReplied.textContent = replied;
+        elements.statTotal.textContent = messages.length;
+        elements.statUnread.textContent = messages.filter(m => m.status === "Unread").length;
+        elements.statRead.textContent = messages.filter(m => m.status === "Read").length;
+        elements.statReplied.textContent = messages.filter(m => m.status === "Replied").length;
     }
 
-    /* Render Main Data Management Table (Read Operation) */
     function renderMessagesList() {
-        // Filter and Search Pipeline
         let filtered = messages.filter(m => {
             const matchesFilter = (activeFilter === "All") || (m.status === activeFilter);
             const matchesSearch = m.name.toLowerCase().includes(activeSearchQuery) ||
@@ -350,14 +435,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return matchesFilter && matchesSearch;
         });
 
-        // Reverse to show newest messages first
         filtered.sort((a, b) => b.id - a.id);
 
         if (filtered.length === 0) {
             elements.messagesListWrapper.innerHTML = `
                 <div class="empty-state">
                     <h4>NO MESSAGES FOUND</h4>
-                    <p>Messages submitted through the Contact Us form will appear here.</p>
+                    <p>Messages submitted through the Contact form will appear here.</p>
                 </div>
             `;
             return;
@@ -378,8 +462,6 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         filtered.forEach(msg => {
-            const badgeClass = getBadgeClass(msg.status);
-
             tableHTML += `
                 <tr>
                     <td data-label="Sender">
@@ -389,7 +471,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td data-label="Subject">${escapeHTML(msg.subject)}</td>
                     <td data-label="Date">${msg.date}</td>
                     <td data-label="Status">
-                        <select onchange="updateMessageStatus(${msg.id}, this.value)" style="padding:0.2rem 0.4rem; border:1px solid var(--border);">
+                        <select onchange="updateMessageStatus(${msg.id}, this.value)">
                             <option value="Unread" ${msg.status === "Unread" ? "selected" : ""}>Unread</option>
                             <option value="Read" ${msg.status === "Read" ? "selected" : ""}>Read</option>
                             <option value="Replied" ${msg.status === "Replied" ? "selected" : ""}>Replied</option>
@@ -410,12 +492,11 @@ document.addEventListener("DOMContentLoaded", function () {
         elements.messagesListWrapper.innerHTML = tableHTML;
     }
 
-    /* Render Overview Recent Activity Stream */
     function renderRecentMessages() {
         const recent = [...messages].sort((a, b) => b.id - a.id).slice(0, 3);
 
         if (recent.length === 0) {
-            elements.recentMessagesContainer.innerHTML = `<p style="color:var(--muted); margin-top:1rem;">No messages currently logged in system.</p>`;
+            elements.recentMessagesContainer.innerHTML = `<p style="color:var(--muted); margin-top:1rem;">No messages recorded yet.</p>`;
             return;
         }
 
@@ -436,7 +517,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* ==========================================================================
-       Message Action Handlers (Update and Delete Operations)
+       Message Action Handlers
        ========================================================================== */
     window.updateMessageStatus = function (id, newStatus) {
         const msg = messages.find(m => m.id === id);
@@ -450,7 +531,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const msg = messages.find(m => m.id === id);
         if (!msg) return;
 
-        // Auto mark as read on view if currently unread
         if (msg.status === "Unread") {
             msg.status = "Read";
             saveMessagesToStorage();
@@ -494,18 +574,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const msg = messages.find(m => m.id === id);
         if (!msg) return;
 
-        // Mark message as Replied
         msg.status = "Replied";
         saveMessagesToStorage();
 
-        // Launch system default email client
-        const mailtoUri = `mailto:${encodeURIComponent(msg.email)}?subject=${encodeURIComponent("Re: " + msg.subject)}`;
-        window.location.href = mailtoUri;
+        window.location.href = `mailto:${encodeURIComponent(msg.email)}?subject=${encodeURIComponent("Re: " + msg.subject)}`;
     };
 
     window.deleteSingleMessage = function (id) {
-        const confirmed = confirm("Are you sure you want to permanently delete this message record?");
-        if (confirmed) {
+        if (confirm("Are you sure you want to permanently delete this message?")) {
             messages = messages.filter(m => m.id !== id);
             saveMessagesToStorage();
         }
@@ -513,18 +589,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function clearAllMessages() {
         if (messages.length === 0) {
-            alert("There are no messages available to delete.");
+            alert("No messages available to delete.");
             return;
         }
 
-        const confirmed = confirm("WARNING: Are you sure you want to delete ALL stored contact messages?");
-        if (confirmed) {
+        if (confirm("Are you sure you want to permanently clear ALL stored messages?")) {
             messages = [];
             saveMessagesToStorage();
         }
     }
 
-    /* Helper Utility Functions */
+    /* Helper Utilities */
     function getBadgeClass(status) {
         switch (status) {
             case "Unread": return "badge-unread";
@@ -543,6 +618,5 @@ document.addEventListener("DOMContentLoaded", function () {
             .replace(/'/g, "&#039;");
     }
 
-    // Launch App
     initApp();
 });

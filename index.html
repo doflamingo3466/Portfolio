@@ -7,21 +7,28 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Public Navigation -->
+    <!-- Public Navigation Header (Hidden when inside Admin Panel) -->
     <header class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="brand-logo">ABID<span>.</span></a>
             
-            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div class="nav-right-group">
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
+                    <span id="themeIcon">🌙</span>
+                </button>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
 
             <nav class="nav-links" id="navLinks">
                 <a href="#home" class="nav-item active">Home</a>
@@ -37,8 +44,8 @@
     <!-- Public Portfolio Content -->
     <main id="publicView">
         
-        <!-- Hero Section (Background Image Placeholder URL applied in CSS / Style) -->
-        <section id="home" class="hero-section hero-bg-placeholder">
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
             <div class="hero-container">
                 <div class="hero-text">
                     <span class="sub-heading">01 // HELLO, I'M</span>
@@ -46,7 +53,7 @@
                     <p class="hero-tagline">BSIT Student & Aspiring Web Developer</p>
                     <p class="hero-bio">
                         Passionate about constructing clean, user-centric web applications and system software. 
-                        Currently exploring modern frontend architectures and backend integrations.
+                        Currently exploring modern frontend architectures, responsive design primitives, and dynamic database integrations.
                     </p>
                     <div class="hero-actions">
                         <a href="#projects" class="btn btn-primary">VIEW MY WORK</a>
@@ -55,7 +62,6 @@
                 </div>
                 <div class="hero-image-wrapper">
                     <div class="image-frame">
-                        <!-- Personal Picture Placeholder URL (Replace URL in style.css or src) -->
                         <div class="profile-image-container" id="profileImageContainer">
                             <img src="" alt="Muhammad Abid Subhani" id="profileImage" class="profile-img hidden">
                             <div class="placeholder-avatar" id="avatarFallback">
@@ -77,13 +83,13 @@
                 <div class="about-grid">
                     <div class="about-description">
                         <p>
-                            I am a Dedicated Information Technology undergraduate student at The Superior University. 
-                            My focus centers on constructing scalable web applications, understanding system architectures, 
+                            I am a dedicated Information Technology undergraduate student at The Superior University. 
+                            My primary focus centers on constructing scalable web applications, understanding architecture, 
                             and mastering modern web frameworks.
                         </p>
                         <p>
                             With hands-on experience across full-stack primitives, database management systems, and desktop/mobile software, 
-                            I approach problems systematically and write clean, maintainable code.
+                            I approach complex problems systematically and prioritize writing clean, maintainable code.
                         </p>
                     </div>
                     <div class="info-cards-grid">
@@ -100,15 +106,15 @@
                             <span class="info-value">7th Semester</span>
                         </div>
                         <div class="info-card">
-                            <span class="info-label">FIELD</span>
-                            <span class="info-value">Information Technology</span>
+                            <span class="info-label">LOCATION</span>
+                            <span class="info-value">Pakistan</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
+        <!-- Interactive Skills Section -->
         <section id="skills" class="skills-section">
             <div class="section-container">
                 <div class="section-header">
@@ -116,54 +122,21 @@
                     <h2>SKILLS & COMPETENCIES</h2>
                 </div>
                 
-                <div class="skills-grid">
-                    <!-- Frontend -->
-                    <div class="skill-category">
-                        <h3>Frontend</h3>
-                        <div class="tags-list">
-                            <span class="skill-tag">HTML5</span>
-                            <span class="skill-tag">CSS3</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">Responsive Design</span>
-                        </div>
-                    </div>
+                <!-- Interactive Skill Filter Tabs -->
+                <div class="skill-tabs-nav" id="skillTabsNav">
+                    <button class="skill-tab-btn active" data-skill-cat="all">All Skills</button>
+                    <button class="skill-tab-btn" data-skill-cat="frontend">Frontend</button>
+                    <button class="skill-tab-btn" data-skill-cat="programming">Programming</button>
+                    <button class="skill-tab-btn" data-skill-cat="database">Database & Tools</button>
+                </div>
 
-                    <!-- Programming -->
-                    <div class="skill-category">
-                        <h3>Programming</h3>
-                        <div class="tags-list">
-                            <span class="skill-tag">C++</span>
-                            <span class="skill-tag">C</span>
-                            <span class="skill-tag">Dart</span>
-                        </div>
-                    </div>
-
-                    <!-- Database & Data -->
-                    <div class="skill-category">
-                        <h3>Database & Data</h3>
-                        <div class="tags-list">
-                            <span class="skill-tag">SQL Server</span>
-                            <span class="skill-tag">JSON</span>
-                            <span class="skill-tag">LocalStorage</span>
-                        </div>
-                    </div>
-
-                    <!-- Tools -->
-                    <div class="skill-category">
-                        <h3>Tools & Platforms</h3>
-                        <div class="tags-list">
-                            <span class="skill-tag">VS Code</span>
-                            <span class="skill-tag">Git</span>
-                            <span class="skill-tag">GitHub</span>
-                            <span class="skill-tag">Android Studio</span>
-                            <span class="skill-tag">XAMPP</span>
-                        </div>
-                    </div>
+                <div class="skills-grid" id="skillsGridContainer">
+                    <!-- Dynamic rendering via JS -->
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
+        <!-- Interactive Projects Section -->
         <section id="projects" class="projects-section">
             <div class="section-container">
                 <div class="section-header">
@@ -171,49 +144,20 @@
                     <h2>FEATURED PROJECTS</h2>
                 </div>
 
-                <div class="projects-grid">
-                    <!-- Project 01 -->
-                    <article class="project-card">
-                        <span class="project-num">PROJECT 01</span>
-                        <h3 class="project-title">LAN Chat Application</h3>
-                        <p class="project-desc">A real-time socket-based local area network messaging solution for localized group collaboration.</p>
-                        <div class="tech-stack">
-                            <span>Flutter</span>
-                            <span>Dart</span>
-                            <span>Sockets</span>
-                            <span>XAMPP</span>
-                        </div>
-                        <button class="btn-text" onclick="openProjectDetails(1)">View Project Details &rarr;</button>
-                    </article>
+                <!-- Search & Category Filters for Projects -->
+                <div class="project-controls">
+                    <div class="project-search">
+                        <input type="text" id="projectSearchInput" placeholder="Search projects by name or technology...">
+                    </div>
+                    <div class="project-category-tabs" id="projectCategoryTabs">
+                        <button class="proj-cat-btn active" data-cat="all">All</button>
+                        <button class="proj-cat-btn" data-cat="mobile">Mobile/Network</button>
+                        <button class="proj-cat-btn" data-cat="web">Web Application</button>
+                    </div>
+                </div>
 
-                    <!-- Project 02 -->
-                    <article class="project-card">
-                        <span class="project-num">PROJECT 02</span>
-                        <h3 class="project-title">Trading Journal Dashboard</h3>
-                        <p class="project-desc">A client-side dynamic analytics platform allowing traders to track position statistics and logs.</p>
-                        <div class="tech-stack">
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
-                            <span>JSON</span>
-                            <span>Chart.js</span>
-                        </div>
-                        <button class="btn-text" onclick="openProjectDetails(2)">View Project Details &rarr;</button>
-                    </article>
-
-                    <!-- Project 03 -->
-                    <article class="project-card">
-                        <span class="project-num">PROJECT 03</span>
-                        <h3 class="project-title">Student Management System</h3>
-                        <p class="project-desc">A web application storing and computing student records, enrollments, and status analytics.</p>
-                        <div class="tech-stack">
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
-                            <span>LocalStorage</span>
-                        </div>
-                        <button class="btn-text" onclick="openProjectDetails(3)">View Project Details &rarr;</button>
-                    </article>
+                <div class="projects-grid" id="projectsContainer">
+                    <!-- Dynamically populated project cards -->
                 </div>
             </div>
         </section>
@@ -227,8 +171,18 @@
                 </div>
                 <div class="contact-grid">
                     <div class="contact-info">
-                        <p class="contact-sub">Have a question, project idea, or just want to say hello? Send me a message.</p>
-                        <p class="contact-note">Messages sent through this form will be instantly recorded to the dynamic administrative database panel.</p>
+                        <p class="contact-sub">Have a question, project idea, or collaboration offer? Send a message.</p>
+                        <p class="contact-note">Messages sent through this form are instantly recorded in the dynamic LocalStorage admin database.</p>
+                        <div class="contact-meta-list">
+                            <div class="meta-item">
+                                <span class="meta-title">EMAIL</span>
+                                <span class="meta-val">abid.subhani@example.com</span>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-title">AVAILABILITY</span>
+                                <span class="meta-val">Open for Software Projects</span>
+                            </div>
+                        </div>
                     </div>
 
                     <form id="contactForm" class="contact-form" novalidate>
@@ -287,7 +241,7 @@
             <button class="modal-close" id="closeLoginModal">&times;</button>
             <div class="modal-header">
                 <h3>ADMIN LOGIN</h3>
-                <p class="demo-notice">Frontend Demo Credentials:</p>
+                <p class="demo-notice">Demo Credentials: <strong>admin</strong> / <strong>admin123</strong></p>
             </div>
             <form id="loginForm">
                 <div class="form-group">

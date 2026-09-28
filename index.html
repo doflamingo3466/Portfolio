@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Abid Subhani | Portfolio & Admin</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Public Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="brand-logo">ABID<span>.</span></a>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="nav-item active">Home</a>
+                <a href="#about" class="nav-item">About</a>
+                <a href="#skills" class="nav-item">Skills</a>
+                <a href="#projects" class="nav-item">Projects</a>
+                <a href="#contact" class="nav-item">Contact</a>
+                <button class="admin-btn" id="openAdminBtn">ADMIN</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Public Portfolio Content -->
+    <main id="publicView">
+        
+        <!-- Hero Section -->
+        <section id="home" class="hero-section">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <span class="sub-heading">01 // HELLO, I'M</span>
+                    <h1 class="hero-title">MUHAMMAD ABID SUBHANI</h1>
+                    <p class="hero-tagline">BSIT Student & Aspiring Web Developer</p>
+                    <p class="hero-bio">
+                        Passionate about constructing clean, user-centric web applications and system software. 
+                        Currently exploring modern frontend architectures and backend integrations.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary">VIEW MY WORK</a>
+                        <a href="#contact" class="btn btn-outline">CONTACT ME</a>
+                    </div>
+                </div>
+                <div class="hero-image-wrapper">
+                    <div class="image-frame">
+                        <div class="placeholder-avatar">
+                            <span>MAS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">02</span>
+                    <h2>ABOUT ME</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="about-description">
+                        <p>
+                            I am a Dedicated Information Technology undergraduate student at The Superior University. 
+                            My focus centers on constructing scalable web applications, understanding system architectures, 
+                            and mastering modern web frameworks.
+                        </p>
+                        <p>
+                            With hands-on experience across full-stack primitives, database management systems, and desktop/mobile software, 
+                            I approach problems systematically and write clean, maintainable code.
+                        </p>
+                    </div>
+                    <div class="info-cards-grid">
+                        <div class="info-card">
+                            <span class="info-label">EDUCATION</span>
+                            <span class="info-value">BS Information Technology</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-label">UNIVERSITY</span>
+                            <span class="info-value">The Superior University</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-label">CURRENT STATUS</span>
+                            <span class="info-value">7th Semester</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-label">FIELD</span>
+                            <span class="info-value">Information Technology</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">03</span>
+                    <h2>SKILLS & COMPETENCIES</h2>
+                </div>
+                
+                <div class="skills-grid">
+                    <!-- Frontend -->
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Responsive Design</span>
+                        </div>
+                    </div>
+
+                    <!-- Programming -->
+                    <div class="skill-category">
+                        <h3>Programming</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">C</span>
+                            <span class="skill-tag">Dart</span>
+                        </div>
+                    </div>
+
+                    <!-- Database & Data -->
+                    <div class="skill-category">
+                        <h3>Database & Data</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">SQL Server</span>
+                            <span class="skill-tag">JSON</span>
+                            <span class="skill-tag">LocalStorage</span>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="skill-category">
+                        <h3>Tools & Platforms</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">Android Studio</span>
+                            <span class="skill-tag">XAMPP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">04</span>
+                    <h2>FEATURED PROJECTS</h2>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Project 01 -->
+                    <article class="project-card">
+                        <span class="project-num">PROJECT 01</span>
+                        <h3 class="project-title">LAN Chat Application</h3>
+                        <p class="project-desc">A real-time socket-based local area network messaging solution for localized group collaboration.</p>
+                        <div class="tech-stack">
+                            <span>Flutter</span>
+                            <span>Dart</span>
+                            <span>Sockets</span>
+                            <span>XAMPP</span>
+                        </div>
+                        <button class="btn-text">View Project Details &rarr;</button>
+                    </article>
+
+                    <!-- Project 02 -->
+                    <article class="project-card">
+                        <span class="project-num">PROJECT 02</span>
+                        <h3 class="project-title">Trading Journal Dashboard</h3>
+                        <p class="project-desc">A client-side dynamic analytics platform allowing traders to track position statistics, execution logs, and perform performance visual reviews.</p>
+                        <div class="tech-stack">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>JSON</span>
+                            <span>Chart.js</span>
+                        </div>
+                        <button class="btn-text">View Project Details &rarr;</button>
+                    </article>
+
+                    <!-- Project 03 -->
+                    <article class="project-card">
+                        <span class="project-num">PROJECT 03</span>
+                        <h3 class="project-title">Student Management System</h3>
+                        <p class="project-desc">A web application storing and computing student records, enrollments, and status analytics with LocalStorage data persistence.</p>
+                        <div class="tech-stack">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>LocalStorage</span>
+                        </div>
+                        <button class="btn-text">View Project Details &rarr;</button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">05</span>
+                    <h2>LET'S TALK</h2>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p class="contact-sub">Have a question, project idea, or just want to say hello? Send me a message.</p>
+                        <p class="contact-note">Messages sent through this form will be instantly recorded to the dynamic administrative database panel.</p>
+                    </div>
+
+                    <form id="contactForm" class="contact-form" novalidate>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="John Doe">
+                            <span class="error-msg" id="nameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com">
+                            <span class="error-msg" id="emailError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="Project Inquiry">
+                            <span class="error-msg" id="subjectError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" placeholder="Write your message here..."></textarea>
+                            <span class="error-msg" id="messageError"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary full-width">Send Message</button>
+                        <div id="formSuccess" class="form-success-msg"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Admin Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeLoginModal">&times;</button>
+            <div class="modal-header">
+                <h3>ADMIN LOGIN</h3>
+                <p class="demo-notice">Frontend Demo Credentials: <strong>admin</strong> / <strong>admin123</strong></p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <span class="error-msg" id="loginError"></span>
+                <button type="submit" class="btn btn-primary full-width">Login to Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard View -->
+    <div id="adminView" class="admin-view hidden">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>ADMIN PANEL</h2>
+                <p>Portfolio Manager</p>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="sidebar-link active" data-tab="overview">Dashboard</button>
+                <button class="sidebar-link" data-tab="messages">Messages</button>
+                <button class="sidebar-link logout-btn" id="logoutBtn">Logout</button>
+            </nav>
+        </aside>
+
+        <main class="admin-content">
+            <header class="admin-topbar">
+                <div class="topbar-welcome">
+                    <span>Welcome back, <strong>Admin</strong></span>
+                </div>
+                <button class="btn btn-outline btn-sm" id="exitAdminBtn">Exit to Portfolio</button>
+            </header>
+
+            <!-- Dashboard Overview Tab -->
+            <section id="overviewTab" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-title">TOTAL MESSAGES</span>
+                        <span class="stat-value" id="statTotal">0</span>
+                    </div>
+                    <div class="stat-card stat-unread">
+                        <span class="stat-title">UNREAD</span>
+                        <span class="stat-value" id="statUnread">0</span>
+                    </div>
+                    <div class="stat-card stat-read">
+                        <span class="stat-title">READ</span>
+                        <span class="stat-value" id="statRead">0</span>
+                    </div>
+                    <div class="stat-card stat-replied">
+                        <span class="stat-title">REPLIED</span>
+                        <span class="stat-value" id="statReplied">0</span>
+                    </div>
+                </div>
+
+                <div class="recent-section">
+                    <h3>Recent Enquiries</h3>
+                    <div id="recentMessagesContainer"></div>
+                </div>
+            </section>
+
+            <!-- Messages Management Tab -->
+            <section id="messagesTab" class="tab-content">
+                <div class="controls-bar">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search by name, email, or subject...">
+                    </div>
+                    <div class="filter-box">
+                        <select id="statusFilter">
+                            <option value="All">All Statuses</option>
+                            <option value="Unread">Unread</option>
+                            <option value="Read">Read</option>
+                            <option value="Replied">Replied</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="clearAllBtn">Clear All Messages</button>
+                </div>
+
+                <div class="messages-list-wrapper" id="messagesListWrapper">
+                    <!-- Dynamic rendering table/cards -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- View Message Detail Modal -->
+    <div class="modal-overlay" id="viewMessageModal">
+        <div class="modal-card modal-lg">
+            <button class="modal-close" id="closeViewModal">&times;</button>
+            <div class="modal-header">
+                <h3>MESSAGE DETAILS</h3>
+            </div>
+            <div class="modal-body" id="messageModalBody">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closeViewModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="publicFooter">
+        <div class="footer-container">
+            <p>&copy; 2026 Muhammad Abid Subhani. Built with HTML, CSS & JavaScript.</p>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+                <button class="footer-admin-link" id="footerAdminBtn">Admin</button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,548 +1,413 @@
-/**
- * Personal Portfolio Website with Admin Dashboard
- * Author: Muhammad Abid Subhani
- * Architecture: Native Vanilla JavaScript (ES6+) with LocalStorage Data Operations
- */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Abid Subhani | Portfolio & Admin</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Application Context & State
-    const STORAGE_KEY = "portfolioMessages";
-    let messages = [];
-    let activeFilter = "All";
-    let activeSearchQuery = "";
+    <!-- Public Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="brand-logo">ABID<span>.</span></a>
+            
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-    // DOM Elements Reference Object
-    const elements = {
-        // Public Navigation & Layout
-        menuToggle: document.getElementById("menuToggle"),
-        navLinks: document.getElementById("navLinks"),
-        publicView: document.getElementById("publicView"),
-        publicFooter: document.getElementById("publicFooter"),
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="nav-item active">Home</a>
+                <a href="#about" class="nav-item">About</a>
+                <a href="#skills" class="nav-item">Skills</a>
+                <a href="#projects" class="nav-item">Projects</a>
+                <a href="#contact" class="nav-item">Contact</a>
+                <button class="admin-btn" id="openAdminBtn">ADMIN</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Public Portfolio Content -->
+    <main id="publicView">
         
-        // Contact Form
-        contactForm: document.getElementById("contactForm"),
-        nameInput: document.getElementById("name"),
-        emailInput: document.getElementById("email"),
-        subjectInput: document.getElementById("subject"),
-        messageInput: document.getElementById("message"),
-        nameError: document.getElementById("nameError"),
-        emailError: document.getElementById("emailError"),
-        subjectError: document.getElementById("subjectError"),
-        messageError: document.getElementById("messageError"),
-        formSuccess: document.getElementById("formSuccess"),
-
-        // Admin Access Modals
-        openAdminBtn: document.getElementById("openAdminBtn"),
-        footerAdminBtn: document.getElementById("footerAdminBtn"),
-        loginModal: document.getElementById("loginModal"),
-        closeLoginModal: document.getElementById("closeLoginModal"),
-        loginForm: document.getElementById("loginForm"),
-        adminUsername: document.getElementById("adminUsername"),
-        adminPassword: document.getElementById("adminPassword"),
-        loginError: document.getElementById("loginError"),
-
-        // Admin Dashboard Layout & Navigation
-        adminView: document.getElementById("adminView"),
-        exitAdminBtn: document.getElementById("exitAdminBtn"),
-        logoutBtn: document.getElementById("logoutBtn"),
-        sidebarLinks: document.querySelectorAll(".sidebar-link[data-tab]"),
-        tabContents: document.querySelectorAll(".tab-content"),
-
-        // Statistics Display
-        statTotal: document.getElementById("statTotal"),
-        statUnread: document.getElementById("statUnread"),
-        statRead: document.getElementById("statRead"),
-        statReplied: document.getElementById("statReplied"),
-
-        // Admin Message Controls
-        searchInput: document.getElementById("searchInput"),
-        statusFilter: document.getElementById("statusFilter"),
-        clearAllBtn: document.getElementById("clearAllBtn"),
-        messagesListWrapper: document.getElementById("messagesListWrapper"),
-        recentMessagesContainer: document.getElementById("recentMessagesContainer"),
-
-        // Detail View Modal
-        viewMessageModal: document.getElementById("viewMessageModal"),
-        closeViewModal: document.getElementById("closeViewModal"),
-        closeViewModalBtn: document.getElementById("closeViewModalBtn"),
-        messageModalBody: document.getElementById("messageModalBody")
-    };
-
-    /* ==========================================================================
-       Initialization
-       ========================================================================== */
-    function initApp() {
-        loadMessagesFromStorage();
-        attachEventListeners();
-        renderDashboard();
-    }
-
-    /* ==========================================================================
-       LocalStorage Operations (CRUD Core Engine)
-       ========================================================================== */
-    // Helper function to safely parse LocalStorage data with error handling
-    function loadMessagesFromStorage() {
-        try {
-            const storedData = localStorage.getItem(STORAGE_KEY);
-            messages = storedData ? JSON.parse(storedData) : [];
-            // Ensure array type safety
-            if (!Array.isArray(messages)) {
-                messages = [];
-            }
-        } catch (error) {
-            console.error("Error reading messages from LocalStorage:", error);
-            messages = [];
-        }
-    }
-
-    // Helper function to write messages to LocalStorage
-    function saveMessagesToStorage() {
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-            renderDashboard(); // Re-render state everywhere upon alteration
-        } catch (error) {
-            console.error("Failed to write to LocalStorage:", error);
-            alert("Storage operation failed. Your browser storage might be full or blocked.");
-        }
-    }
-
-    /* ==========================================================================
-       Event Registering Engine
-       ========================================================================== */
-    function attachEventListeners() {
-        // Navigation Mobile Menu Toggle
-        elements.menuToggle.addEventListener("click", toggleMobileMenu);
-
-        // Close mobile nav when link clicked
-        document.querySelectorAll(".nav-item").forEach(link => {
-            link.addEventListener("click", () => {
-                elements.navLinks.classList.remove("active");
-            });
-        });
-
-        // Contact Form Processing
-        elements.contactForm.addEventListener("submit", handleContactSubmit);
-
-        // Admin Modal Controls
-        elements.openAdminBtn.addEventListener("click", showLoginModal);
-        elements.footerAdminBtn.addEventListener("click", showLoginModal);
-        elements.closeLoginModal.addEventListener("click", hideLoginModal);
-        elements.loginForm.addEventListener("submit", handleAdminLogin);
-
-        // Admin Session & Tab Navigation
-        elements.exitAdminBtn.addEventListener("click", exitAdminView);
-        elements.logoutBtn.addEventListener("click", logoutAdmin);
-
-        elements.sidebarLinks.forEach(button => {
-            button.addEventListener("click", function () {
-                const targetTab = this.getAttribute("data-tab");
-                switchAdminTab(targetTab);
-            });
-        });
-
-        // Search & Filter Listeners
-        elements.searchInput.addEventListener("input", function (e) {
-            activeSearchQuery = e.target.value.toLowerCase().trim();
-            renderMessagesList();
-        });
-
-        elements.statusFilter.addEventListener("change", function (e) {
-            activeFilter = e.target.value;
-            renderMessagesList();
-        });
-
-        elements.clearAllBtn.addEventListener("click", clearAllMessages);
-
-        // Detail Modal Closing Operations
-        elements.closeViewModal.addEventListener("click", closeViewModal);
-        elements.closeViewModalBtn.addEventListener("click", closeViewModal);
-    }
-
-    /* ==========================================================================
-       Public View Functions
-       ========================================================================== */
-    function toggleMobileMenu() {
-        elements.navLinks.classList.toggle("active");
-    }
-
-    /* Contact Form Validation and Message Dispatch */
-    function handleContactSubmit(e) {
-        e.preventDefault();
-        
-        // Reset Error Feedback Messages
-        clearFormErrors();
-
-        // Capture Inputs
-        const name = elements.nameInput.value.trim();
-        const email = elements.emailInput.value.trim();
-        const subject = elements.subjectInput.value.trim();
-        const message = elements.messageInput.value.trim();
-
-        let isValid = true;
-
-        // Validation Checks
-        if (name === "") {
-            elements.nameError.textContent = "Please enter your full name.";
-            isValid = false;
-        }
-
-        if (email === "") {
-            elements.emailError.textContent = "Please enter your email address.";
-            isValid = false;
-        } else if (!validateEmailPattern(email)) {
-            elements.emailError.textContent = "Please provide a valid email format.";
-            isValid = false;
-        }
-
-        if (subject === "") {
-            elements.subjectError.textContent = "Please state a subject message line.";
-            isValid = false;
-        }
-
-        if (message === "") {
-            elements.messageError.textContent = "Please fill out your message body.";
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // Construct Data Object (Create Operation)
-        const newMessage = {
-            id: Date.now(),
-            name: name,
-            email: email,
-            subject: subject,
-            message: message,
-            status: "Unread",
-            date: new Date().toLocaleString("en-US", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true
-            })
-        };
-
-        // Append to Array and Persist
-        messages.push(newMessage);
-        saveMessagesToStorage();
-
-        // Feedback & Form Reset
-        elements.contactForm.reset();
-        elements.formSuccess.style.display = "block";
-        elements.formSuccess.textContent = "Thank you! Your message has been sent successfully.";
-
-        setTimeout(() => {
-            elements.formSuccess.style.display = "none";
-        }, 4000);
-    }
-
-    function clearFormErrors() {
-        elements.nameError.textContent = "";
-        elements.emailError.textContent = "";
-        elements.subjectError.textContent = "";
-        elements.messageError.textContent = "";
-    }
-
-    function validateEmailPattern(email) {
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return pattern.test(email);
-    }
-
-    /* ==========================================================================
-       Admin Access & Navigation Logic
-       ========================================================================== */
-    function showLoginModal() {
-        elements.loginModal.classList.add("active");
-        elements.loginError.textContent = "";
-    }
-
-    function hideLoginModal() {
-        elements.loginModal.classList.remove("active");
-        elements.loginForm.reset();
-    }
-
-    function handleAdminLogin(e) {
-        e.preventDefault();
-        
-        /**
-         * FRONTEND DEMONSTRATION NOTICE:
-         * Standard static username/password checking logic. 
-         * Real security requires a backend server with cryptographic password hashing and HTTP cookies/tokens.
-         */
-        const username = elements.adminUsername.value.trim();
-        const password = elements.adminPassword.value.trim();
-
-        if (username === "admin" && password === "admin123") {
-            hideLoginModal();
-            enterAdminView();
-        } else {
-            elements.loginError.textContent = "Invalid username or password credentials.";
-        }
-    }
-
-    function enterAdminView() {
-        elements.publicView.classList.add("hidden");
-        elements.publicFooter.classList.add("hidden");
-        elements.adminView.classList.remove("hidden");
-        renderDashboard();
-    }
-
-    function exitAdminView() {
-        elements.adminView.classList.add("hidden");
-        elements.publicView.classList.remove("hidden");
-        elements.publicFooter.classList.remove("hidden");
-    }
-
-    function logoutAdmin() {
-        exitAdminView();
-    }
-
-    function switchAdminTab(targetTab) {
-        elements.sidebarLinks.forEach(link => {
-            if (link.getAttribute("data-tab") === targetTab) {
-                link.classList.add("active");
-            } else {
-                link.classList.remove("active");
-            }
-        });
-
-        elements.tabContents.forEach(content => {
-            if (content.id === targetTab + "Tab") {
-                content.classList.add("active");
-            } else {
-                content.classList.remove("active");
-            }
-        });
-    }
-
-    /* ==========================================================================
-       Dashboard & Data Rendering
-       ========================================================================== */
-    function renderDashboard() {
-        calculateStatistics();
-        renderMessagesList();
-        renderRecentMessages();
-    }
-
-    /* Dynamic Statistics Engine */
-    function calculateStatistics() {
-        const total = messages.length;
-        const unread = messages.filter(m => m.status === "Unread").length;
-        const read = messages.filter(m => m.status === "Read").length;
-        const replied = messages.filter(m => m.status === "Replied").length;
-
-        elements.statTotal.textContent = total;
-        elements.statUnread.textContent = unread;
-        elements.statRead.textContent = read;
-        elements.statReplied.textContent = replied;
-    }
-
-    /* Render Main Data Management Table (Read Operation) */
-    function renderMessagesList() {
-        // Filter and Search Pipeline
-        let filtered = messages.filter(m => {
-            const matchesFilter = (activeFilter === "All") || (m.status === activeFilter);
-            const matchesSearch = m.name.toLowerCase().includes(activeSearchQuery) ||
-                                  m.email.toLowerCase().includes(activeSearchQuery) ||
-                                  m.subject.toLowerCase().includes(activeSearchQuery);
-            return matchesFilter && matchesSearch;
-        });
-
-        // Reverse to show newest messages first
-        filtered.sort((a, b) => b.id - a.id);
-
-        if (filtered.length === 0) {
-            elements.messagesListWrapper.innerHTML = `
-                <div class="empty-state">
-                    <h4>NO MESSAGES FOUND</h4>
-                    <p>Messages submitted through the Contact Us form will appear here.</p>
-                </div>
-            `;
-            return;
-        }
-
-        let tableHTML = `
-            <table class="messages-table">
-                <thead>
-                    <tr>
-                        <th>Sender</th>
-                        <th>Subject</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        filtered.forEach(msg => {
-            const badgeClass = getBadgeClass(msg.status);
-
-            tableHTML += `
-                <tr>
-                    <td data-label="Sender">
-                        <strong>${escapeHTML(msg.name)}</strong><br>
-                        <small style="color:var(--muted);">${escapeHTML(msg.email)}</small>
-                    </td>
-                    <td data-label="Subject">${escapeHTML(msg.subject)}</td>
-                    <td data-label="Date">${msg.date}</td>
-                    <td data-label="Status">
-                        <select onchange="updateMessageStatus(${msg.id}, this.value)" style="padding:0.2rem 0.4rem; border:1px solid var(--border);">
-                            <option value="Unread" ${msg.status === "Unread" ? "selected" : ""}>Unread</option>
-                            <option value="Read" ${msg.status === "Read" ? "selected" : ""}>Read</option>
-                            <option value="Replied" ${msg.status === "Replied" ? "selected" : ""}>Replied</option>
-                        </select>
-                    </td>
-                    <td data-label="Actions">
-                        <div class="table-actions">
-                            <button class="btn btn-outline btn-sm" onclick="viewMessageDetails(${msg.id})">View</button>
-                            <button class="btn btn-outline btn-sm" onclick="replyToMessage(${msg.id})">Reply</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteSingleMessage(${msg.id})">Delete</button>
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
-
-        tableHTML += `</tbody></table>`;
-        elements.messagesListWrapper.innerHTML = tableHTML;
-    }
-
-    /* Render Overview Recent Activity Stream */
-    function renderRecentMessages() {
-        const recent = [...messages].sort((a, b) => b.id - a.id).slice(0, 3);
-
-        if (recent.length === 0) {
-            elements.recentMessagesContainer.innerHTML = `<p style="color:var(--muted); margin-top:1rem;">No messages currently logged in system.</p>`;
-            return;
-        }
-
-        let html = `<div style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">`;
-        recent.forEach(msg => {
-            html += `
-                <div style="background:var(--surface); border:1px solid var(--border); padding:1rem; display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <strong>${escapeHTML(msg.name)}</strong> - <span style="color:var(--muted); font-size:0.85rem;">${escapeHTML(msg.subject)}</span>
-                        <div style="font-size:0.75rem; color:var(--muted);">${msg.date}</div>
+        <!-- Hero Section (Background Image Placeholder URL applied in CSS / Style) -->
+        <section id="home" class="hero-section hero-bg-placeholder">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <span class="sub-heading">01 // HELLO, I'M</span>
+                    <h1 class="hero-title">MUHAMMAD ABID SUBHANI</h1>
+                    <p class="hero-tagline">BSIT Student & Aspiring Web Developer</p>
+                    <p class="hero-bio">
+                        Passionate about constructing clean, user-centric web applications and system software. 
+                        Currently exploring modern frontend architectures and backend integrations.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary">VIEW MY WORK</a>
+                        <a href="#contact" class="btn btn-outline">CONTACT ME</a>
                     </div>
-                    <span class="badge ${getBadgeClass(msg.status)}">${msg.status}</span>
                 </div>
-            `;
-        });
-        html += `</div>`;
-        elements.recentMessagesContainer.innerHTML = html;
-    }
-
-    /* ==========================================================================
-       Message Action Handlers (Update and Delete Operations)
-       ========================================================================== */
-    window.updateMessageStatus = function (id, newStatus) {
-        const msg = messages.find(m => m.id === id);
-        if (msg) {
-            msg.status = newStatus;
-            saveMessagesToStorage();
-        }
-    };
-
-    window.viewMessageDetails = function (id) {
-        const msg = messages.find(m => m.id === id);
-        if (!msg) return;
-
-        // Auto mark as read on view if currently unread
-        if (msg.status === "Unread") {
-            msg.status = "Read";
-            saveMessagesToStorage();
-        }
-
-        elements.messageModalBody.innerHTML = `
-            <div class="detail-row">
-                <div class="detail-label">Sender Name</div>
-                <div class="detail-content">${escapeHTML(msg.name)}</div>
+                <div class="hero-image-wrapper">
+                    <div class="image-frame">
+                        <!-- Personal Picture Placeholder URL (Replace URL in style.css or src) -->
+                        <div class="profile-image-container" id="profileImageContainer">
+                            <img src="" alt="Muhammad Abid Subhani" id="profileImage" class="profile-img hidden">
+                            <div class="placeholder-avatar" id="avatarFallback">
+                                <span>MAS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="detail-row">
-                <div class="detail-label">Email Address</div>
-                <div class="detail-content">${escapeHTML(msg.email)}</div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">02</span>
+                    <h2>ABOUT ME</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="about-description">
+                        <p>
+                            I am a Dedicated Information Technology undergraduate student at The Superior University. 
+                            My focus centers on constructing scalable web applications, understanding system architectures, 
+                            and mastering modern web frameworks.
+                        </p>
+                        <p>
+                            With hands-on experience across full-stack primitives, database management systems, and desktop/mobile software, 
+                            I approach problems systematically and write clean, maintainable code.
+                        </p>
+                    </div>
+                    <div class="info-cards-grid">
+                        <div class="info-card">
+                            <span class="info-label">EDUCATION</span>
+                            <span class="info-value">BS Information Technology</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-label">UNIVERSITY</span>
+                            <span class="info-value">The Superior University</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-label">CURRENT STATUS</span>
+                            <span class="info-value">7th Semester</span>
+                        </div>
+                        <div class="info-card">
+                            <span class="info-label">FIELD</span>
+                            <span class="info-value">Information Technology</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="detail-row">
-                <div class="detail-label">Subject</div>
-                <div class="detail-content">${escapeHTML(msg.subject)}</div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">03</span>
+                    <h2>SKILLS & COMPETENCIES</h2>
+                </div>
+                
+                <div class="skills-grid">
+                    <!-- Frontend -->
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Responsive Design</span>
+                        </div>
+                    </div>
+
+                    <!-- Programming -->
+                    <div class="skill-category">
+                        <h3>Programming</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">C</span>
+                            <span class="skill-tag">Dart</span>
+                        </div>
+                    </div>
+
+                    <!-- Database & Data -->
+                    <div class="skill-category">
+                        <h3>Database & Data</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">SQL Server</span>
+                            <span class="skill-tag">JSON</span>
+                            <span class="skill-tag">LocalStorage</span>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="skill-category">
+                        <h3>Tools & Platforms</h3>
+                        <div class="tags-list">
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">Android Studio</span>
+                            <span class="skill-tag">XAMPP</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="detail-row">
-                <div class="detail-label">Date Submitted</div>
-                <div class="detail-content">${msg.date}</div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">04</span>
+                    <h2>FEATURED PROJECTS</h2>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Project 01 -->
+                    <article class="project-card">
+                        <span class="project-num">PROJECT 01</span>
+                        <h3 class="project-title">LAN Chat Application</h3>
+                        <p class="project-desc">A real-time socket-based local area network messaging solution for localized group collaboration.</p>
+                        <div class="tech-stack">
+                            <span>Flutter</span>
+                            <span>Dart</span>
+                            <span>Sockets</span>
+                            <span>XAMPP</span>
+                        </div>
+                        <button class="btn-text" onclick="openProjectDetails(1)">View Project Details &rarr;</button>
+                    </article>
+
+                    <!-- Project 02 -->
+                    <article class="project-card">
+                        <span class="project-num">PROJECT 02</span>
+                        <h3 class="project-title">Trading Journal Dashboard</h3>
+                        <p class="project-desc">A client-side dynamic analytics platform allowing traders to track position statistics and logs.</p>
+                        <div class="tech-stack">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>JSON</span>
+                            <span>Chart.js</span>
+                        </div>
+                        <button class="btn-text" onclick="openProjectDetails(2)">View Project Details &rarr;</button>
+                    </article>
+
+                    <!-- Project 03 -->
+                    <article class="project-card">
+                        <span class="project-num">PROJECT 03</span>
+                        <h3 class="project-title">Student Management System</h3>
+                        <p class="project-desc">A web application storing and computing student records, enrollments, and status analytics.</p>
+                        <div class="tech-stack">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>LocalStorage</span>
+                        </div>
+                        <button class="btn-text" onclick="openProjectDetails(3)">View Project Details &rarr;</button>
+                    </article>
+                </div>
             </div>
-            <div class="detail-row">
-                <div class="detail-label">Current Status</div>
-                <div class="detail-content"><span class="badge ${getBadgeClass(msg.status)}">${msg.status}</span></div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-num">05</span>
+                    <h2>LET'S TALK</h2>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p class="contact-sub">Have a question, project idea, or just want to say hello? Send me a message.</p>
+                        <p class="contact-note">Messages sent through this form will be instantly recorded to the dynamic administrative database panel.</p>
+                    </div>
+
+                    <form id="contactForm" class="contact-form" novalidate>
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="John Doe">
+                            <span class="error-msg" id="nameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com">
+                            <span class="error-msg" id="emailError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="Project Inquiry">
+                            <span class="error-msg" id="subjectError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" placeholder="Write your message here..."></textarea>
+                            <span class="error-msg" id="messageError"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary full-width">Send Message</button>
+                        <div id="formSuccess" class="form-success-msg"></div>
+                    </form>
+                </div>
             </div>
-            <div class="detail-row">
-                <div class="detail-label">Message Content</div>
-                <div class="detail-content detail-box">${escapeHTML(msg.message)}</div>
+        </section>
+    </main>
+
+    <!-- Project Details Modal -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-card modal-lg">
+            <button class="modal-close" id="closeProjectModal">&times;</button>
+            <div class="modal-header">
+                <span class="project-num" id="modalProjectNum">PROJECT DETAILS</span>
+                <h3 id="modalProjectTitle" style="font-size:1.6rem; margin-top:0.2rem;">Project Name</h3>
             </div>
-        `;
+            <div class="modal-body" id="projectModalBody" style="margin-top:1rem;">
+                <!-- Dynamically populated project details -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closeProjectModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
 
-        elements.viewMessageModal.classList.add("active");
-    };
+    <!-- Admin Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeLoginModal">&times;</button>
+            <div class="modal-header">
+                <h3>ADMIN LOGIN</h3>
+                <p class="demo-notice">Frontend Demo Credentials: <strong>admin</strong> / <strong>admin123</strong></p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="adminUsername">Username</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <span class="error-msg" id="loginError"></span>
+                <button type="submit" class="btn btn-primary full-width">Login to Dashboard</button>
+            </form>
+        </div>
+    </div>
 
-    function closeViewModal() {
-        elements.viewMessageModal.classList.remove("active");
-    }
+    <!-- Admin Dashboard View -->
+    <div id="adminView" class="admin-view hidden">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>ADMIN PANEL</h2>
+                <p>Portfolio Manager</p>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="sidebar-link active" data-tab="overview">Dashboard</button>
+                <button class="sidebar-link" data-tab="messages">Messages</button>
+                <button class="sidebar-link logout-btn" id="logoutBtn">Logout</button>
+            </nav>
+        </aside>
 
-    window.replyToMessage = function (id) {
-        const msg = messages.find(m => m.id === id);
-        if (!msg) return;
+        <main class="admin-content">
+            <header class="admin-topbar">
+                <div class="topbar-welcome">
+                    <span>Welcome back, <strong>Admin</strong></span>
+                </div>
+                <button class="btn btn-outline btn-sm" id="exitAdminBtn">Exit to Portfolio</button>
+            </header>
 
-        // Mark message as Replied
-        msg.status = "Replied";
-        saveMessagesToStorage();
+            <!-- Dashboard Overview Tab -->
+            <section id="overviewTab" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-title">TOTAL MESSAGES</span>
+                        <span class="stat-value" id="statTotal">0</span>
+                    </div>
+                    <div class="stat-card stat-unread">
+                        <span class="stat-title">UNREAD</span>
+                        <span class="stat-value" id="statUnread">0</span>
+                    </div>
+                    <div class="stat-card stat-read">
+                        <span class="stat-title">READ</span>
+                        <span class="stat-value" id="statRead">0</span>
+                    </div>
+                    <div class="stat-card stat-replied">
+                        <span class="stat-title">REPLIED</span>
+                        <span class="stat-value" id="statReplied">0</span>
+                    </div>
+                </div>
 
-        // Launch system default email client
-        const mailtoUri = `mailto:${encodeURIComponent(msg.email)}?subject=${encodeURIComponent("Re: " + msg.subject)}`;
-        window.location.href = mailtoUri;
-    };
+                <div class="recent-section">
+                    <h3>Recent Enquiries</h3>
+                    <div id="recentMessagesContainer"></div>
+                </div>
+            </section>
 
-    window.deleteSingleMessage = function (id) {
-        const confirmed = confirm("Are you sure you want to permanently delete this message record?");
-        if (confirmed) {
-            messages = messages.filter(m => m.id !== id);
-            saveMessagesToStorage();
-        }
-    };
+            <!-- Messages Management Tab -->
+            <section id="messagesTab" class="tab-content">
+                <div class="controls-bar">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search by name, email, or subject...">
+                    </div>
+                    <div class="filter-box">
+                        <select id="statusFilter">
+                            <option value="All">All Statuses</option>
+                            <option value="Unread">Unread</option>
+                            <option value="Read">Read</option>
+                            <option value="Replied">Replied</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="clearAllBtn">Clear All Messages</button>
+                </div>
 
-    function clearAllMessages() {
-        if (messages.length === 0) {
-            alert("There are no messages available to delete.");
-            return;
-        }
+                <div class="messages-list-wrapper" id="messagesListWrapper">
+                    <!-- Dynamic rendering table/cards -->
+                </div>
+            </section>
+        </main>
+    </div>
 
-        const confirmed = confirm("WARNING: Are you sure you want to delete ALL stored contact messages?");
-        if (confirmed) {
-            messages = [];
-            saveMessagesToStorage();
-        }
-    }
+    <!-- View Message Detail Modal -->
+    <div class="modal-overlay" id="viewMessageModal">
+        <div class="modal-card modal-lg">
+            <button class="modal-close" id="closeViewModal">&times;</button>
+            <div class="modal-header">
+                <h3>MESSAGE DETAILS</h3>
+            </div>
+            <div class="modal-body" id="messageModalBody">
+                <!-- Dynamically populated -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="closeViewModalBtn">Close</button>
+            </div>
+        </div>
+    </div>
 
-    /* Helper Utility Functions */
-    function getBadgeClass(status) {
-        switch (status) {
-            case "Unread": return "badge-unread";
-            case "Read": return "badge-read";
-            case "Replied": return "badge-replied";
-            default: return "";
-        }
-    }
+    <!-- Footer -->
+    <footer class="footer" id="publicFooter">
+        <div class="footer-container">
+            <p>&copy; 2026 Muhammad Abid Subhani. Built with HTML, CSS & JavaScript.</p>
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+                <button class="footer-admin-link" id="footerAdminBtn">Admin</button>
+            </div>
+        </div>
+    </footer>
 
-    function escapeHTML(str) {
-        return str
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-    // Launch App
-    initApp();
-});
+    <script src="script.js"></script>
+</body>
+</html>

@@ -2,366 +2,317 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Abid Subhani | Portfolio & Admin</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Superior College Events</title>
+
+    <!-- Google Font – Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS (via CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-ENjdO4Dr2bkBIFxQpeo6lH0zW1hU4K7x0kP5aZ5C7Ev6l3t5kEtNlJlLlw5STbVt"
+          crossorigin="anonymous">
+
+    <!-- Custom Styles (must be after Bootstrap) -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-light">
 
-    <!-- Public Navigation Header (Hidden when inside Admin Panel) -->
-    <header class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="brand-logo">ABID<span>.</span></a>
-            
-            <div class="nav-right-group">
-                <!-- Theme Toggle Button -->
-                <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
-                    <span id="themeIcon">🌙</span>
-                </button>
-
-                <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-
-            <nav class="nav-links" id="navLinks">
-                <a href="#home" class="nav-item active">Home</a>
-                <a href="#about" class="nav-item">About</a>
-                <a href="#skills" class="nav-item">Skills</a>
-                <a href="#projects" class="nav-item">Projects</a>
-                <a href="#contact" class="nav-item">Contact</a>
-                <button class="admin-btn" id="openAdminBtn">ADMIN</button>
-            </nav>
+<!-- ====================== Navbar ====================== -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">Superior College Events</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end"
+             id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
+                <li class="nav-item"><a class="nav-link" href="#registration">Registration</a></li>
+                <li class="nav-item"><a class="nav-link" href="#registrations">Registrations</a></li>
+            </ul>
         </div>
-    </header>
+    </div>
+</nav>
 
-    <!-- Public Portfolio Content -->
-    <main id="publicView">
-        
-        <!-- Hero Section -->
-        <section id="home" class="hero-section">
-            <div class="hero-container">
-                <div class="hero-text">
-                    <span class="sub-heading">01 // HELLO, I'M</span>
-                    <h1 class="hero-title">MUHAMMAD ABID SUBHANI</h1>
-                    <p class="hero-tagline">BSIT Student & Aspiring Web Developer</p>
-                    <p class="hero-bio">
-                        Passionate about constructing clean, user-centric web applications and system software. 
-                        Currently exploring modern frontend architectures, responsive design primitives, and dynamic database integrations.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="#projects" class="btn btn-primary">VIEW MY WORK</a>
-                        <a href="#contact" class="btn btn-outline">CONTACT ME</a>
-                    </div>
-                </div>
-                <div class="hero-image-wrapper">
-                    <div class="image-frame">
-                        <div class="profile-image-container" id="profileImageContainer">
-                            <img src="" alt="Muhammad Abid Subhani" id="profileImage" class="profile-img hidden">
-                            <div class="placeholder-avatar" id="avatarFallback">
-                                <span>MAS</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- ====================== Hero ====================== -->
+<section id="home" class="hero d-flex align-items-center text-center text-white">
+    <div class="container">
+        <h1 class="display-4 fw-bold">College Events 2026</h1>
+        <p class="lead">Discover. Participate. Create Memories.</p>
+        <p>Explore upcoming college events, choose your favorite activities, and register to become part of the campus experience.</p>
+        <a href="#events" class="btn btn-outline-light btn-lg mt-3">Explore Events</a>
+    </div>
+</section>
 
-        <!-- About Section -->
-        <section id="about" class="about-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-num">02</span>
-                    <h2>ABOUT ME</h2>
-                </div>
-                <div class="about-grid">
-                    <div class="about-description">
-                        <p>
-                            I am a dedicated Information Technology undergraduate student at The Superior University. 
-                            My primary focus centers on constructing scalable web applications, understanding architecture, 
-                            and mastering modern web frameworks.
+<!-- ====================== Events ====================== -->
+<section id="events" class="py-5">
+    <div class="container">
+        <h2 class="mb-4 text-center">Upcoming Events</h2>
+        <div class="row g-4">
+
+            <!-- ==== Card template – we repeat it 4 times ==== -->
+            <!-- Card 1 – Sports Gala -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 shadow-sm rounded-3">
+                    <img src="https://picsum.photos/seed/sports/400/200" class="card-img-top" alt="Sports Gala">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Sports Gala</h5>
+                        <span class="badge bg-success mb-2">Sports</span>
+                        <p class="card-text flex-grow-1">
+                            An exciting day of athletic competitions, team games, and individual challenges designed to bring students together through healthy competition.
                         </p>
-                        <p>
-                            With hands-on experience across full-stack primitives, database management systems, and desktop/mobile software, 
-                            I approach complex problems systematically and prioritize writing clean, maintainable code.
+                        <p class="mb-1"><strong>Date:</strong> October 15, 2026</p>
+                        <p class="mb-3"><strong>Location:</strong> College Sports Ground</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(1)">Details</button>
+                            <button class="btn btn-primary btn-sm" onclick="applyNow(1)">Apply Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 – Music Night -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 shadow-sm rounded-3">
+                    <img src="https://picsum.photos/seed/music/400/200" class="card-img-top" alt="Music Night">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Music Night</h5>
+                        <span class="badge bg-info mb-2">Music & Entertainment</span>
+                        <p class="card-text flex-grow-1">
+                            An evening dedicated to live performances, musical talent, singing, and entertainment featuring students from different departments.
                         </p>
-                    </div>
-                    <div class="info-cards-grid">
-                        <div class="info-card">
-                            <span class="info-label">EDUCATION</span>
-                            <span class="info-value">BS Information Technology</span>
-                        </div>
-                        <div class="info-card">
-                            <span class="info-label">UNIVERSITY</span>
-                            <span class="info-value">The Superior University</span>
-                        </div>
-                        <div class="info-card">
-                            <span class="info-label">CURRENT STATUS</span>
-                            <span class="info-value">7th Semester</span>
-                        </div>
-                        <div class="info-card">
-                            <span class="info-label">LOCATION</span>
-                            <span class="info-value">Pakistan</span>
+                        <p class="mb-1"><strong>Date:</strong> November 5, 2026</p>
+                        <p class="mb-3"><strong>Location:</strong> College Auditorium</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(2)">Details</button>
+                            <button class="btn btn-primary btn-sm" onclick="applyNow(2)">Apply Now</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Interactive Skills Section -->
-        <section id="skills" class="skills-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-num">03</span>
-                    <h2>SKILLS & COMPETENCIES</h2>
-                </div>
-                
-                <!-- Interactive Skill Filter Tabs -->
-                <div class="skill-tabs-nav" id="skillTabsNav">
-                    <button class="skill-tab-btn active" data-skill-cat="all">All Skills</button>
-                    <button class="skill-tab-btn" data-skill-cat="frontend">Frontend</button>
-                    <button class="skill-tab-btn" data-skill-cat="programming">Programming</button>
-                    <button class="skill-tab-btn" data-skill-cat="database">Database & Tools</button>
-                </div>
-
-                <div class="skills-grid" id="skillsGridContainer">
-                    <!-- Dynamic rendering via JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Projects Section -->
-        <section id="projects" class="projects-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-num">04</span>
-                    <h2>FEATURED PROJECTS</h2>
-                </div>
-
-                <!-- Search & Category Filters for Projects -->
-                <div class="project-controls">
-                    <div class="project-search">
-                        <input type="text" id="projectSearchInput" placeholder="Search projects by name or technology...">
-                    </div>
-                    <div class="project-category-tabs" id="projectCategoryTabs">
-                        <button class="proj-cat-btn active" data-cat="all">All</button>
-                        <button class="proj-cat-btn" data-cat="mobile">Mobile/Network</button>
-                        <button class="proj-cat-btn" data-cat="web">Web Application</button>
-                    </div>
-                </div>
-
-                <div class="projects-grid" id="projectsContainer">
-                    <!-- Dynamically populated project cards -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="contact-section">
-            <div class="section-container">
-                <div class="section-header">
-                    <span class="section-num">05</span>
-                    <h2>LET'S TALK</h2>
-                </div>
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <p class="contact-sub">Have a question, project idea, or collaboration offer? Send a message.</p>
-                        <p class="contact-note">Messages sent through this form are instantly recorded in the dynamic LocalStorage admin database.</p>
-                        <div class="contact-meta-list">
-                            <div class="meta-item">
-                                <span class="meta-title">EMAIL</span>
-                                <span class="meta-val">abid.subhani@example.com</span>
-                            </div>
-                            <div class="meta-item">
-                                <span class="meta-title">AVAILABILITY</span>
-                                <span class="meta-val">Open for Software Projects</span>
-                            </div>
+            <!-- Card 3 – Culture Day -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 shadow-sm rounded-3">
+                    <img src="https://picsum.photos/seed/culture/400/200" class="card-img-top" alt="Culture Day">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Culture Day</h5>
+                        <span class="badge bg-warning text-dark mb-2">Cultural</span>
+                        <p class="card-text flex-grow-1">
+                            A celebration of cultural diversity where students can showcase traditional clothing, food, performances, art, and heritage.
+                        </p>
+                        <p class="mb-1"><strong>Date:</strong> December 2, 2026</p>
+                        <p class="mb-3"><strong>Location:</strong> College Quad</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(3)">Details</button>
+                            <button class="btn btn-primary btn-sm" onclick="applyNow(3)">Apply Now</button>
                         </div>
                     </div>
-
-                    <form id="contactForm" class="contact-form" novalidate>
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" placeholder="John Doe">
-                            <span class="error-msg" id="nameError"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" placeholder="john@example.com">
-                            <span class="error-msg" id="emailError"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" placeholder="Project Inquiry">
-                            <span class="error-msg" id="subjectError"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" rows="5" placeholder="Write your message here..."></textarea>
-                            <span class="error-msg" id="messageError"></span>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary full-width">Send Message</button>
-                        <div id="formSuccess" class="form-success-msg"></div>
-                    </form>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <!-- Project Details Modal -->
-    <div class="modal-overlay" id="projectModal">
-        <div class="modal-card modal-lg">
-            <button class="modal-close" id="closeProjectModal">&times;</button>
+            <!-- Card 4 – Society Fair -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card h-100 shadow-sm rounded-3">
+                    <img src="https://picsum.photos/seed/society/400/200" class="card-img-top" alt="Society Fair">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">Society Fair</h5>
+                        <span class="badge bg-danger mb-2">Student Societies</span>
+                        <p class="card-text flex-grow-1">
+                            Explore college societies, meet members, discover communities, and participate in activities organized by different societies.
+                        </p>
+                        <p class="mb-1"><strong>Date:</strong> January 12, 2027</p>
+                        <p class="mb-3"><strong>Location:</strong> Main Hall</p>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(4)">Details</button>
+                            <button class="btn btn-primary btn-sm" onclick="applyNow(4)">Apply Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ====================== Event Details Modal ====================== -->
+<div class="modal fade" id="eventDetailsModal" tabindex="-1"
+     aria-labelledby="eventDetailsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
             <div class="modal-header">
-                <span class="project-num" id="modalProjectNum">PROJECT DETAILS</span>
-                <h3 id="modalProjectTitle" style="font-size:1.6rem; margin-top:0.2rem;">Project Name</h3>
+                <h5 class="modal-title fw-bold" id="eventDetailsLabel">Event Details</h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="projectModalBody" style="margin-top:1rem;">
-                <!-- Dynamically populated project details -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="closeProjectModalBtn">Close</button>
+            <div class="modal-body" id="modalContent">
+                <!-- Filled dynamically by script.js -->
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Admin Login Modal -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-card">
-            <button class="modal-close" id="closeLoginModal">&times;</button>
-            <div class="modal-header">
-                <h3>ADMIN LOGIN</h3>
-                <p class="demo-notice">Demo Credentials: <strong>admin</strong> / <strong>admin123</strong></p>
+<!-- ====================== Registration Form ====================== -->
+<section id="registration" class="py-5 bg-white">
+    <div class="container">
+        <h2 class="mb-4 text-center">Event Registration</h2>
+        <p class="text-center mb-5">
+            Fill in your information to participate in a college event.
+        </p>
+
+        <form id="registrationForm" class="row g-3 needs-validation" novalidate>
+            <!-- Hidden field – edit mode -->
+            <input type="hidden" id="editId" value="">
+
+            <div class="col-md-6">
+                <label for="fullName" class="form-label">Full Name *</label>
+                <input type="text" class="form-control" id="fullName" required>
+                <div class="invalid-feedback">Please enter your full name.</div>
             </div>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label for="adminUsername">Username</label>
-                    <input type="text" id="adminUsername" required>
+
+            <div class="col-md-6">
+                <label for="studentId" class="form-label">Student ID *</label>
+                <input type="text" class="form-control" id="studentId" required>
+                <div class="invalid-feedback">Please enter your student ID.</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email *</label>
+                <input type="email" class="form-control" id="email" required>
+                <div class="invalid-feedback">Please provide a valid email.</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="phone" class="form-label">Phone Number *</label>
+                <input type="tel" class="form-control" id="phone" required>
+                <div class="invalid-feedback">Please enter a phone number.</div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="department" class="form-label">Department *</label>
+                <select id="department" class="form-select" required>
+                    <option value="">Choose…</option>
+                    <option>BSIT</option>
+                    <option>BSCS</option>
+                    <option>BBA</option>
+                    <option>Engineering</option>
+                    <option>English</option>
+                    <option>Other</option>
+                </select>
+                <div class="invalid-feedback">Please select a department.</div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="semester" class="form-label">Semester *</label>
+                <select id="semester" class="form-select" required>
+                    <option value="">Choose…</option>
+                    <option>1st</option>
+                    <option>2nd</option>
+                    <option>3rd</option>
+                    <option>4th</option>
+                    <option>5th</option>
+                    <option>6th</option>
+                    <option>7th</option>
+                    <option>8th</option>
+                </select>
+                <div class="invalid-feedback">Please select a semester.</div>
+            </div>
+
+            <div class="col-md-4">
+                <label for="eventSelect" class="form-label">Event *</label>
+                <select id="eventSelect" class="form-select" required onchange="updateActivityOptions()">
+                    <option value="">Choose…</option>
+                    <!-- Options injected by script.js -->
+                </select>
+                <div class="invalid-feedback">Please select an event.</div>
+            </div>
+
+            <div class="col-md-6">
+                <label for="eventDate" class="form-label">Event Date</label>
+                <input type="text" class="form-control" id="eventDate" readonly>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Optional Participation</label>
+                <small class="d-block mb-2 text-muted">
+                    You may select one or more activities. This section is optional.
+                </small>
+                <div id="activityContainer" class="row g-2">
+                    <!-- Activity checkboxes injected by script.js -->
                 </div>
-                <div class="form-group">
-                    <label for="adminPassword">Password</label>
-                    <input type="password" id="adminPassword" required>
-                </div>
-                <span class="error-msg" id="loginError"></span>
-                <button type="submit" class="btn btn-primary full-width">Login to Dashboard</button>
-            </form>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end gap-2">
+                <button type="reset" class="btn btn-secondary">Reset Form</button>
+                <button type="submit" class="btn btn-success" id="submitBtn">Register Now</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- ====================== Registration Management ====================== -->
+<section id="registrations" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4 text-center">Registration Management</h2>
+
+        <!-- Dashboard -->
+        <div class="row g-4 mb-4" id="dashboardCards">
+            <!-- Filled by script.js -->
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>Student Name</th>
+                        <th>Student ID</th>
+                        <th>Department</th>
+                        <th>Event</th>
+                        <th>Semester</th>
+                        <th>Activities</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="registrationTableBody">
+                    <!-- Rows injected by script.js -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center mt-3">
+            <button class="btn btn-outline-danger"
+                    onclick="clearAllRegistrations()">
+                Clear All Registrations
+            </button>
         </div>
     </div>
+</section>
 
-    <!-- Admin Dashboard View -->
-    <div id="adminView" class="admin-view hidden">
-        <aside class="admin-sidebar">
-            <div class="sidebar-header">
-                <h2>ADMIN PANEL</h2>
-                <p>Portfolio Manager</p>
-            </div>
-            <nav class="sidebar-nav">
-                <button class="sidebar-link active" data-tab="overview">Dashboard</button>
-                <button class="sidebar-link" data-tab="messages">Messages</button>
-                <button class="sidebar-link logout-btn" id="logoutBtn">Logout</button>
-            </nav>
-        </aside>
-
-        <main class="admin-content">
-            <header class="admin-topbar">
-                <div class="topbar-welcome">
-                    <span>Welcome back, <strong>Admin</strong></span>
-                </div>
-                <button class="btn btn-outline btn-sm" id="exitAdminBtn">Exit to Portfolio</button>
-            </header>
-
-            <!-- Dashboard Overview Tab -->
-            <section id="overviewTab" class="tab-content active">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-title">TOTAL MESSAGES</span>
-                        <span class="stat-value" id="statTotal">0</span>
-                    </div>
-                    <div class="stat-card stat-unread">
-                        <span class="stat-title">UNREAD</span>
-                        <span class="stat-value" id="statUnread">0</span>
-                    </div>
-                    <div class="stat-card stat-read">
-                        <span class="stat-title">READ</span>
-                        <span class="stat-value" id="statRead">0</span>
-                    </div>
-                    <div class="stat-card stat-replied">
-                        <span class="stat-title">REPLIED</span>
-                        <span class="stat-value" id="statReplied">0</span>
-                    </div>
-                </div>
-
-                <div class="recent-section">
-                    <h3>Recent Enquiries</h3>
-                    <div id="recentMessagesContainer"></div>
-                </div>
-            </section>
-
-            <!-- Messages Management Tab -->
-            <section id="messagesTab" class="tab-content">
-                <div class="controls-bar">
-                    <div class="search-box">
-                        <input type="text" id="searchInput" placeholder="Search by name, email, or subject...">
-                    </div>
-                    <div class="filter-box">
-                        <select id="statusFilter">
-                            <option value="All">All Statuses</option>
-                            <option value="Unread">Unread</option>
-                            <option value="Read">Read</option>
-                            <option value="Replied">Replied</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-danger btn-sm" id="clearAllBtn">Clear All Messages</button>
-                </div>
-
-                <div class="messages-list-wrapper" id="messagesListWrapper">
-                    <!-- Dynamic rendering table/cards -->
-                </div>
-            </section>
-        </main>
+<!-- ====================== Footer ====================== -->
+<footer class="bg-primary text-white py-4">
+    <div class="container text-center">
+        <h5 class="fw-bold">Superior College Events</h5>
+        <p class="mb-0">
+            Connecting students through events, activities and campus experiences.
+        </p>
+        <small class="d-block mt-2">© 2026 Superior College. All rights reserved.</small>
     </div>
+</footer>
 
-    <!-- View Message Detail Modal -->
-    <div class="modal-overlay" id="viewMessageModal">
-        <div class="modal-card modal-lg">
-            <button class="modal-close" id="closeViewModal">&times;</button>
-            <div class="modal-header">
-                <h3>MESSAGE DETAILS</h3>
-            </div>
-            <div class="modal-body" id="messageModalBody">
-                <!-- Dynamically populated -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="closeViewModalBtn">Close</button>
-            </div>
-        </div>
-    </div>
+<!-- Bootstrap Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+Dl6W57lF2CEsfMMIg18M9CEmI2dr"
+        crossorigin="anonymous"></script>
 
-    <!-- Footer -->
-    <footer class="footer" id="publicFooter">
-        <div class="footer-container">
-            <p>&copy; 2026 Muhammad Abid Subhani. Built with HTML, CSS & JavaScript.</p>
-            <div class="footer-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-                <button class="footer-admin-link" id="footerAdminBtn">Admin</button>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+<!-- Custom JavaScript -->
+<script src="script.js"></script>
 </body>
 </html>

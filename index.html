@@ -1,318 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Superior College Events</title>
-
-    <!-- Google Font – Manrope -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap"
-          rel="stylesheet">
-
-    <!-- Bootstrap 5 CSS (via CDN) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-ENjdO4Dr2bkBIFxQpeo6lH0zW1hU4K7x0kP5aZ5C7Ev6l3t5kEtNlJlLlw5STbVt"
-          crossorigin="anonymous">
-
-    <!-- Custom Styles (must be after Bootstrap) -->
-    <link rel="stylesheet" href="style.css">
+    <title>Muhammad Abid</title>
 </head>
-<body class="bg-light">
-
-<!-- ====================== Navbar ====================== -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#">Superior College Events</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end"
-             id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#events">Events</a></li>
-                <li class="nav-item"><a class="nav-link" href="#registration">Registration</a></li>
-                <li class="nav-item"><a class="nav-link" href="#registrations">Registrations</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- ====================== Hero ====================== -->
-<section id="home" class="hero d-flex align-items-center text-center text-white">
-    <div class="container">
-        <h1 class="display-4 fw-bold">College Events 2026</h1>
-        <p class="lead">Discover. Participate. Create Memories.</p>
-        <p>Explore upcoming college events, choose your favorite activities, and register to become part of the campus experience.</p>
-        <a href="#events" class="btn btn-outline-light btn-lg mt-3">Explore Events</a>
-    </div>
-</section>
-
-<!-- ====================== Events ====================== -->
-<section id="events" class="py-5">
-    <div class="container">
-        <h2 class="mb-4 text-center">Upcoming Events</h2>
-        <div class="row g-4">
-
-            <!-- ==== Card template – we repeat it 4 times ==== -->
-            <!-- Card 1 – Sports Gala -->
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 shadow-sm rounded-3">
-                    <img src="https://picsum.photos/seed/sports/400/200" class="card-img-top" alt="Sports Gala">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Sports Gala</h5>
-                        <span class="badge bg-success mb-2">Sports</span>
-                        <p class="card-text flex-grow-1">
-                            An exciting day of athletic competitions, team games, and individual challenges designed to bring students together through healthy competition.
-                        </p>
-                        <p class="mb-1"><strong>Date:</strong> October 15, 2026</p>
-                        <p class="mb-3"><strong>Location:</strong> College Sports Ground</p>
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(1)">Details</button>
-                            <button class="btn btn-primary btn-sm" onclick="applyNow(1)">Apply Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 – Music Night -->
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 shadow-sm rounded-3">
-                    <img src="https://picsum.photos/seed/music/400/200" class="card-img-top" alt="Music Night">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Music Night</h5>
-                        <span class="badge bg-info mb-2">Music & Entertainment</span>
-                        <p class="card-text flex-grow-1">
-                            An evening dedicated to live performances, musical talent, singing, and entertainment featuring students from different departments.
-                        </p>
-                        <p class="mb-1"><strong>Date:</strong> November 5, 2026</p>
-                        <p class="mb-3"><strong>Location:</strong> College Auditorium</p>
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(2)">Details</button>
-                            <button class="btn btn-primary btn-sm" onclick="applyNow(2)">Apply Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 – Culture Day -->
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 shadow-sm rounded-3">
-                    <img src="https://picsum.photos/seed/culture/400/200" class="card-img-top" alt="Culture Day">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Culture Day</h5>
-                        <span class="badge bg-warning text-dark mb-2">Cultural</span>
-                        <p class="card-text flex-grow-1">
-                            A celebration of cultural diversity where students can showcase traditional clothing, food, performances, art, and heritage.
-                        </p>
-                        <p class="mb-1"><strong>Date:</strong> December 2, 2026</p>
-                        <p class="mb-3"><strong>Location:</strong> College Quad</p>
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(3)">Details</button>
-                            <button class="btn btn-primary btn-sm" onclick="applyNow(3)">Apply Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 – Society Fair -->
-            <div class="col-lg-3 col-md-6">
-                <div class="card h-100 shadow-sm rounded-3">
-                    <img src="https://picsum.photos/seed/society/400/200" class="card-img-top" alt="Society Fair">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Society Fair</h5>
-                        <span class="badge bg-danger mb-2">Student Societies</span>
-                        <p class="card-text flex-grow-1">
-                            Explore college societies, meet members, discover communities, and participate in activities organized by different societies.
-                        </p>
-                        <p class="mb-1"><strong>Date:</strong> January 12, 2027</p>
-                        <p class="mb-3"><strong>Location:</strong> Main Hall</p>
-                        <div class="d-grid gap-2">
-                            <button class="btn btn-outline-primary btn-sm" onclick="showEventDetails(4)">Details</button>
-                            <button class="btn btn-primary btn-sm" onclick="applyNow(4)">Apply Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- ====================== Event Details Modal ====================== -->
-<div class="modal fade" id="eventDetailsModal" tabindex="-1"
-     aria-labelledby="eventDetailsLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold" id="eventDetailsLabel">Event Details</h5>
-                <button type="button" class="btn-close"
-                        data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="modalContent">
-                <!-- Filled dynamically by script.js -->
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ====================== Registration Form ====================== -->
-<section id="registration" class="py-5 bg-white">
-    <div class="container">
-        <h2 class="mb-4 text-center">Event Registration</h2>
-        <p class="text-center mb-5">
-            Fill in your information to participate in a college event.
-        </p>
-
-        <form id="registrationForm" class="row g-3 needs-validation" novalidate>
-            <!-- Hidden field – edit mode -->
-            <input type="hidden" id="editId" value="">
-
-            <div class="col-md-6">
-                <label for="fullName" class="form-label">Full Name *</label>
-                <input type="text" class="form-control" id="fullName" required>
-                <div class="invalid-feedback">Please enter your full name.</div>
-            </div>
-
-            <div class="col-md-6">
-                <label for="studentId" class="form-label">Student ID *</label>
-                <input type="text" class="form-control" id="studentId" required>
-                <div class="invalid-feedback">Please enter your student ID.</div>
-            </div>
-
-            <div class="col-md-6">
-                <label for="email" class="form-label">Email *</label>
-                <input type="email" class="form-control" id="email" required>
-                <div class="invalid-feedback">Please provide a valid email.</div>
-            </div>
-
-            <div class="col-md-6">
-                <label for="phone" class="form-label">Phone Number *</label>
-                <input type="tel" class="form-control" id="phone" required>
-                <div class="invalid-feedback">Please enter a phone number.</div>
-            </div>
-
-            <div class="col-md-4">
-                <label for="department" class="form-label">Department *</label>
-                <select id="department" class="form-select" required>
-                    <option value="">Choose…</option>
-                    <option>BSIT</option>
-                    <option>BSCS</option>
-                    <option>BBA</option>
-                    <option>Engineering</option>
-                    <option>English</option>
-                    <option>Other</option>
-                </select>
-                <div class="invalid-feedback">Please select a department.</div>
-            </div>
-
-            <div class="col-md-4">
-                <label for="semester" class="form-label">Semester *</label>
-                <select id="semester" class="form-select" required>
-                    <option value="">Choose…</option>
-                    <option>1st</option>
-                    <option>2nd</option>
-                    <option>3rd</option>
-                    <option>4th</option>
-                    <option>5th</option>
-                    <option>6th</option>
-                    <option>7th</option>
-                    <option>8th</option>
-                </select>
-                <div class="invalid-feedback">Please select a semester.</div>
-            </div>
-
-            <div class="col-md-4">
-                <label for="eventSelect" class="form-label">Event *</label>
-                <select id="eventSelect" class="form-select" required onchange="updateActivityOptions()">
-                    <option value="">Choose…</option>
-                    <!-- Options injected by script.js -->
-                </select>
-                <div class="invalid-feedback">Please select an event.</div>
-            </div>
-
-            <div class="col-md-6">
-                <label for="eventDate" class="form-label">Event Date</label>
-                <input type="text" class="form-control" id="eventDate" readonly>
-            </div>
-
-            <div class="col-12">
-                <label class="form-label">Optional Participation</label>
-                <small class="d-block mb-2 text-muted">
-                    You may select one or more activities. This section is optional.
-                </small>
-                <div id="activityContainer" class="row g-2">
-                    <!-- Activity checkboxes injected by script.js -->
-                </div>
-            </div>
-
-            <div class="col-12 d-flex justify-content-end gap-2">
-                <button type="reset" class="btn btn-secondary">Reset Form</button>
-                <button type="submit" class="btn btn-success" id="submitBtn">Register Now</button>
-            </div>
-        </form>
-    </div>
-</section>
-
-<!-- ====================== Registration Management ====================== -->
-<section id="registrations" class="py-5 bg-light">
-    <div class="container">
-        <h2 class="mb-4 text-center">Registration Management</h2>
-
-        <!-- Dashboard -->
-        <div class="row g-4 mb-4" id="dashboardCards">
-            <!-- Filled by script.js -->
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-primary">
-                    <tr>
-                        <th>#</th>
-                        <th>Student Name</th>
-                        <th>Student ID</th>
-                        <th>Department</th>
-                        <th>Event</th>
-                        <th>Semester</th>
-                        <th>Activities</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="registrationTableBody">
-                    <!-- Rows injected by script.js -->
-                </tbody>
-            </table>
-        </div>
-
-        <div class="text-center mt-3">
-            <button class="btn btn-outline-danger"
-                    onclick="clearAllRegistrations()">
-                Clear All Registrations
-            </button>
-        </div>
-    </div>
-</section>
-
-<!-- ====================== Footer ====================== -->
-<footer class="bg-primary text-white py-4">
-    <div class="container text-center">
-        <h5 class="fw-bold">Superior College Events</h5>
-        <p class="mb-0">
-            Connecting students through events, activities and campus experiences.
-        </p>
-        <small class="d-block mt-2">© 2026 Superior College. All rights reserved.</small>
-    </div>
-</footer>
-
-<!-- Bootstrap Bundle (includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+Dl6W57lF2CEsfMMIg18M9CEmI2dr"
-        crossorigin="anonymous"></script>
-
-<!-- Custom JavaScript -->
-<script src="script.js"></script>
+<body>
+    <h1>Muhammad Abid</h1>
+    <img src="profile.jpg" alt="Muhammad Abid" width="200">
+    <hr>
+    <h2>About Me</h2>
+    <p>I am Abid. My father's name is Hafiz Shahid. I am a student of BS information technology </p>
+    <hr>
+    <h2>Studies</h2>
+    <ol>
+        <li>Matriculation from Garrison Cadet College Kohat</li>
+        <li>Intermediate from Garrison Cadet College Kohat</li>
+        <li>Undergraduate in BS Information Technology from Superior University</li>
+    </ol>  
+    <h2>Skills</h2>
+    <ul>
+        <li>Basics in C++</li>
+        <li>Very Basics in HTML,CSS</li>
+        <li>Basics in SQL</li>
+    </ul>
+    <h2>Hobbies</h2>
+    <ul>
+        <li>Watching Anime</li>
+        <li>Playing Table Tennis</li>
+        <hr>
+        <h2>Contact Info</h>
+            <p>Email: <a href="mailto:abidsubhani34666@gmail.com">Abid's Email</a></p>
+            <p>Phone: 03001234567</p>
 </body>
 </html>
